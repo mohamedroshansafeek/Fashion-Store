@@ -39,8 +39,8 @@ const createOrder = async (req, res) => {
         },
       ],
       application_context: {
-        return_url: "https://fashion-store-drab-nine.vercel.app/shop/paypal-return",
-        cancel_url: "https://fashion-store-drab-nine.vercel.app/shop/paypal-cancel",
+        return_url: "https://fashion-store-pi-wine.vercel.app/shop/paypal-return",
+        cancel_url: "https://fashion-store-pi-wine.vercel.app/shop/paypal-cancel",
       },
     });
 
