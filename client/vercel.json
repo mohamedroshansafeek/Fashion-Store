@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/shop/paypal-return",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/shop/paypal-cancel",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/shop/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
