@@ -1,12 +1,77 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const authRouter = require('./routes/auth/auth-routes')
-const adminProductsRouter = require('./routes/admin/products-routes')
-const adminOrderRouter = require('./routes/admin/order-routes')
+// const express = require('express')
+// const mongoose = require('mongoose')
+// const cookieParser = require('cookie-parser')
+// const cors = require('cors')
+// const authRouter = require('./routes/auth/auth-routes')
+// const adminProductsRouter = require('./routes/admin/products-routes')
+// const adminOrderRouter = require('./routes/admin/order-routes')
 
-const shopCartRouter = require('./routes/shop/cart-routes')
+// const shopCartRouter = require('./routes/shop/cart-routes')
+// const shopProductsRouter = require("./routes/shop/products-routes");
+// const shopAddressRouter = require("./routes/shop/address-routes");
+// const shopOrderRouter = require("./routes/shop/order-routes");
+// const shopSearchRouter = require("./routes/shop/search-routes");
+// const shopReviewRouter = require("./routes/shop/review-routes");
+
+// const commonFeatureRouter = require("./routes/common/feature-routes");
+// require('dotenv').config();
+
+
+// //create a database connection 
+// //create a separate file for this and then import/use that file here
+
+// mongoose.connect(process.env.MONGO_URL)//("mongodb+srv://mohamedroshansafeek:safeek2004@cluster1.ot4ehg6.mongodb.net/fashionstore")
+// .then(()=>console.log("MongoDB Connected"))
+// .catch(error=>console.log(error))
+
+// const app = express()
+// const PORT = process.env.PORT || 5000;
+
+// app.use(
+//     cors({
+//         origin : ['http://localhost:5173', 'https://fashion-store-two-cyan.vercel.app'],
+//         methods : ['GET','POST','DELETE','PUT'],
+//         allowedHeaders : [
+//             "Content-Type",
+//             'Authorization',
+//             'Cache-Control',
+//             'Expires',
+//             'Pragma'
+//         ],
+//         credentials : true
+//     })
+// )
+
+// app.use(cookieParser());
+// app.use(express.json());
+// app.use('/api/auth', authRouter)
+// app.use('/api/admin/products', adminProductsRouter)
+// app.use("/api/admin/orders", adminOrderRouter)
+
+// app.use('/api/shop/products', shopProductsRouter)
+// app.use('/api/shop/cart', shopCartRouter)
+// app.use("/api/shop/address", shopAddressRouter);
+// app.use("/api/shop/order", shopOrderRouter);
+// app.use("/api/shop/search", shopSearchRouter);
+// app.use("/api/shop/review", shopReviewRouter);
+
+// app.use("/api/common/feature", commonFeatureRouter);
+
+
+// app.listen(PORT, ()=> console.log(`Server is now running on port ${PORT}`))
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+require('dotenv').config();
+
+// Routers
+const authRouter = require('./routes/auth/auth-routes');
+const adminProductsRouter = require('./routes/admin/products-routes');
+const adminOrderRouter = require('./routes/admin/order-routes');
+
+const shopCartRouter = require('./routes/shop/cart-routes');
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
 const shopOrderRouter = require("./routes/shop/order-routes");
@@ -14,48 +79,47 @@ const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
-require('dotenv').config();
 
+// --- MongoDB Connection ---
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(error => console.log("MongoDB connection error:", error));
 
-//create a database connection 
-//create a separate file for this and then import/use that file here
-
-mongoose.connect(process.env.MONGO_URL)//("mongodb+srv://mohamedroshansafeek:safeek2004@cluster1.ot4ehg6.mongodb.net/fashionstore")
-.then(()=>console.log("MongoDB Connected"))
-.catch(error=>console.log(error))
-
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(
-    cors({
-        origin : ['http://localhost:5173', 'https://fashion-store-two-cyan.vercel.app'],
-        methods : ['GET','POST','DELETE','PUT'],
-        allowedHeaders : [
-            "Content-Type",
-            'Authorization',
-            'Cache-Control',
-            'Expires',
-            'Pragma'
-        ],
-        credentials : true
-    })
-)
+// --- Middleware ---
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://fashion-store-pi-wine.vercel.app', // <-- deployed frontend
+    ],
+    methods: ['GET','POST','DELETE','PUT'],
+    allowedHeaders: ["Content-Type", 'Authorization'],
+    credentials: true
+}));
 
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/auth', authRouter)
-app.use('/api/admin/products', adminProductsRouter)
-app.use("/api/admin/orders", adminOrderRouter)
 
-app.use('/api/shop/products', shopProductsRouter)
-app.use('/api/shop/cart', shopCartRouter)
+// --- API Routes ---
+// Auth
+app.use('/api/auth', authRouter);
+
+// Admin
+app.use('/api/admin/products', adminProductsRouter);
+app.use("/api/admin/orders", adminOrderRouter);
+
+// Shop
+app.use('/api/shop/products', shopProductsRouter);
+app.use('/api/shop/cart', shopCartRouter);
 app.use("/api/shop/address", shopAddressRouter);
-app.use("/api/shop/order", shopOrderRouter);
+app.use("/api/shop/order", shopOrderRouter); // <-- PayPal create & capture routes
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
 
+// Common features
 app.use("/api/common/feature", commonFeatureRouter);
 
-
-app.listen(PORT, ()=> console.log(`Server is now running on port ${PORT}`))
+// --- Start Server ---
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
