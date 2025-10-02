@@ -47,7 +47,7 @@ function onSubmit(event){
 
     if(res?.success)  {
       toast.success(res.message)
-      navigate("/shop/listing");
+      navigate("/shop/home");
     } else {
          toast.error(res?.message || "Something went wrong!",{ variant : "destructive" }); 
     }
