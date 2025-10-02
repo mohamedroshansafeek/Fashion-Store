@@ -10,6 +10,7 @@ import { toast } from "sonner"; // toast notifications
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
+  const { approvalURL } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
@@ -20,19 +21,21 @@ function ShoppingCheckout() {
       ? cartItems.items.reduce(
           (sum, currentItem) =>
             sum +
-            (currentItem?.salePrice > 0 ? currentItem.salePrice : currentItem?.price) *
+            (currentItem?.salePrice > 0
+              ? currentItem?.salePrice
+              : currentItem?.price) *
               currentItem?.quantity,
           0
         )
       : 0;
 
   function handleInitiatePaypalPayment() {
-    if (!cartItems?.items?.length) {
+    if (!cartItems || !cartItems.items || cartItems.items.length === 0) {
       toast.error("Your cart is empty. Please add items to proceed");
       return;
     }
 
-    if (!currentSelectedAddress) {
+    if (currentSelectedAddress === null) {
       toast.error("Please select one address to proceed.");
       return;
     }
@@ -40,12 +43,15 @@ function ShoppingCheckout() {
     const orderData = {
       userId: user?.id,
       cartId: cartItems?._id,
-      cartItems: cartItems.items.map((item) => ({
-        productId: item?.productId,
-        title: item?.title,
-        image: item?.image,
-        price: item?.salePrice > 0 ? item.salePrice : item?.price,
-        quantity: item?.quantity,
+      cartItems: cartItems.items.map((singleCartItem) => ({
+        productId: singleCartItem?.productId,
+        title: singleCartItem?.title,
+        image: singleCartItem?.image,
+        price:
+          singleCartItem?.salePrice > 0
+            ? singleCartItem?.salePrice
+            : singleCartItem?.price,
+        quantity: singleCartItem?.quantity,
       })),
       addressInfo: {
         addressId: currentSelectedAddress?._id,
@@ -65,21 +71,24 @@ function ShoppingCheckout() {
       payerId: "",
     };
 
-    setIsPaymemntStart(true);
-    toast.success("Order created! Redirecting to PayPal...");
-
     dispatch(createNewOrder(orderData)).then((data) => {
       if (data?.payload?.success) {
+        // ✅ Store orderId in sessionStorage BEFORE redirecting
         const orderId = data.payload.orderId;
         sessionStorage.setItem("currentOrderId", JSON.stringify(orderId));
 
-        const approvalURL = data.payload.approvalURL;
-        if (approvalURL) window.location.href = approvalURL;
+        setIsPaymemntStart(true);
+        toast.success("Order created! Redirecting to PayPal...");
       } else {
         setIsPaymemntStart(false);
         toast.error("Something went wrong. Please try again.");
       }
     });
+  }
+
+  // Redirect to PayPal approval URL
+  if (approvalURL) {
+    window.location.href = approvalURL;
   }
 
   return (
@@ -103,10 +112,11 @@ function ShoppingCheckout() {
 
         {/* Cart Items */}
         <div className="flex flex-col gap-4">
-          {cartItems?.items?.length > 0 &&
-            cartItems.items.map((item) => (
-              <UserCartItemsContent key={item._id} cartItem={item} />
-            ))}
+          {cartItems && cartItems.items && cartItems.items.length > 0
+            ? cartItems.items.map((item) => (
+                <UserCartItemsContent key={item._id} cartItem={item} />
+              ))
+            : null}
 
           {/* Total Amount */}
           <div className="mt-8 space-y-4">
@@ -134,4 +144,4 @@ function ShoppingCheckout() {
   );
 }
 
-export default ShoppingCheckout;
+export default ShoppingCheckout;        
