@@ -13,7 +13,7 @@ export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post(
-      "https://fashion-store-9alj.onrender.com/api/shop/order/create",
+      "https://fashion-store-jcey.onrender.com/api/shop/order/create",
       orderData
     );
 
@@ -41,7 +41,7 @@ export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
   async ({ orderToken, orderId }) => {
     const response = await axios.post(
-      "https://fashion-store-9alj.onrender.com/api/shop/order/capture",
+      "https://fashion-store-jcey.onrender.com/api/shop/order/capture",
       {
         orderToken,
         orderId,
@@ -57,7 +57,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
     const response = await axios.get(
-      `https://fashion-store-9alj.onrender.com/api/shop/order/list/${userId}`
+      `https://fashion-store-jcey.onrender.com/api/shop/order/list/${userId}`
     );
 
     return response.data;
@@ -68,7 +68,7 @@ export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
     const response = await axios.get(
-      `https://fashion-store-9alj.onrender.com/api/shop/order/details/${id}`
+      `https://fashion-store-jcey.onrender.com/api/shop/order/details/${id}`
     );
 
     return response.data;

@@ -10,7 +10,7 @@ const initialState = {
 
 export const registerUser = createAsyncThunk('/auth/register',
     async(formData) => {
-        const response = await axios.post('https://fashion-store-9alj.onrender.com/api/auth/register',formData, {
+        const response = await axios.post('https://fashion-store-jcey.onrender.com/api/auth/register',formData, {
             withCredentials : true
         }
     );
@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk('/auth/register',
 
 export const loginUser = createAsyncThunk('/auth/login',
     async(formData) => {
-        const response = await axios.post('https://fashion-store-9alj.onrender.com/api/auth/login',formData, {
+        const response = await axios.post('https://fashion-store-jcey.onrender.com/api/auth/login',formData, {
             withCredentials : true
         }
     );
@@ -34,7 +34,7 @@ export const loginUser = createAsyncThunk('/auth/login',
 
 export const logoutUser = createAsyncThunk('/auth/logout',
     async() => {
-        const response = await axios.post('https://fashion-store-9alj.onrender.com/api/auth/logout',
+        const response = await axios.post('https://fashion-store-jcey.onrender.com/api/auth/logout',
             {},
          {
             withCredentials : true
@@ -67,7 +67,7 @@ export const logoutUser = createAsyncThunk('/auth/logout',
 export const checkAuth = createAsyncThunk('/auth/checkauth',
   async (_, { getState }) => {
     const token = getState().auth?.user?.token; // get token here
-    const response = await axios.get('https://fashion-store-9alj.onrender.com/api/auth/check-auth', {
+    const response = await axios.get('https://fashion-store-jcey.onrender.com/api/auth/check-auth', {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`,

@@ -14,7 +14,7 @@ export const addReview = createAsyncThunk(
     try {
       const token = localStorage.getItem("token"); // get JWT token from storage
       const response = await axios.post(
-        "https://fashion-store-9alj.onrender.com/api/shop/review/add",
+        "https://fashion-store-jcey.onrender.com/api/shop/review/add",
         formdata,
         {
           headers: {
@@ -36,7 +36,7 @@ export const getReviews = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://fashion-store-9alj.onrender.com/api/shop/review/${id}`
+        `https://fashion-store-jcey.onrender.com/api/shop/review/${id}`
       );
       return response.data;
     } catch (error) {
