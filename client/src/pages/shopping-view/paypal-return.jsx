@@ -10,7 +10,7 @@ function PaypalReturnPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const token = params.get("token"); // v2 API sends token, not paymentId/payerId
+  const token = params.get("token"); 
 
   const [isProcessing, setIsProcessing] = useState(true);
 
