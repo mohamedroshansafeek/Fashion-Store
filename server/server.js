@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
     cors({
-        origin : ['http://localhost:5173', 'https://fashion-store-opal.vercel.app'],
+        origin : ['http://localhost:5173', 'https://fashion-store-drab-nine.vercel.app'],
         methods : ['GET','POST','DELETE','PUT'],
         allowedHeaders : [
             "Content-Type",
