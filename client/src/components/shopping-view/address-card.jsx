@@ -66,24 +66,28 @@ function AddressCard({
         w-full sm:w-[90%] md:w-[80%] lg:w-[60%] mx-auto mt-4`}
     >
       {/* Card Content */}
-      <CardContent
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-sm sm:text-base md:text-lg"
-      >
-        <Label className="break-words">
-          <span className="font-semibold">Address:</span> {addressInfo?.address}
-        </Label>
-        <Label>
-          <span className="font-semibold">City:</span> {addressInfo?.city}
-        </Label>
-        <Label>
-          <span className="font-semibold">Pincode:</span> {addressInfo?.pincode}
-        </Label>
-        <Label>
-          <span className="font-semibold">Phone:</span> {addressInfo?.phone}
-        </Label>
-        <Label className="col-span-full">
-          <span className="font-semibold">Notes:</span> {addressInfo?.notes}
-        </Label>
+      <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm sm:text-base md:text-lg">
+        {/* Each field flex for label + value */}
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <span className="font-semibold">Address:</span>
+          <span className="break-words">{addressInfo?.address}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <span className="font-semibold">City:</span>
+          <span>{addressInfo?.city}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <span className="font-semibold">Pincode:</span>
+          <span>{addressInfo?.pincode}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between">
+          <span className="font-semibold">Phone:</span>
+          <span>{addressInfo?.phone}</span>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:justify-between col-span-full">
+          <span className="font-semibold">Notes:</span>
+          <span>{addressInfo?.notes}</span>
+        </div>
       </CardContent>
 
       {/* Card Footer */}
