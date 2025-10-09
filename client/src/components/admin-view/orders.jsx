@@ -146,28 +146,32 @@ function AdminOrdersView() {
   }, [orderDetails]);
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>All Orders</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Order ID</TableHead>
-              <TableHead>Order Date</TableHead>
-              <TableHead>Order Status</TableHead>
-              <TableHead>Order Price</TableHead>
-              <TableHead>
-                <span className="sr-only">Details</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orderList && orderList.length > 0
-              ? orderList.map((orderItem) => (
+        {/* Horizontal scroll wrapper for small screens */}
+        <div className="overflow-x-auto">
+          <Table className="min-w-[600px]">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order ID</TableHead>
+                <TableHead>Order Date</TableHead>
+                <TableHead>Order Status</TableHead>
+                <TableHead>Order Price</TableHead>
+                <TableHead>
+                  <span className="sr-only">Details</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orderList && orderList.length > 0 ? (
+                orderList.map((orderItem) => (
                   <TableRow key={orderItem._id}>
-                    <TableCell>{orderItem._id}</TableCell>
+                    <TableCell className="truncate max-w-[120px]">
+                      {orderItem._id}
+                    </TableCell>
                     <TableCell>{orderItem.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
@@ -193,6 +197,7 @@ function AdminOrdersView() {
                       >
                         <DialogTrigger asChild>
                           <Button
+                            size="sm"
                             onClick={() =>
                               handleFetchOrderDetails(orderItem._id)
                             }
@@ -207,9 +212,16 @@ function AdminOrdersView() {
                     </TableCell>
                   </TableRow>
                 ))
-              : null}
-          </TableBody>
-        </Table>
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-4">
+                    No orders found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );
