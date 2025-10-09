@@ -84,6 +84,7 @@ function AdminOrdersView() {
                           dispatch(resetOrderDetails());
                         }}
                       >
+                      <div className="flex flex-col gap-2">
                         <Button
                           onClick={() =>
                             handleFetchOrderDetails(orderItem?._id)
@@ -92,6 +93,7 @@ function AdminOrdersView() {
                           View Details
                         </Button>
                         <AdminOrderDetailsView orderDetails={orderDetails} />
+                      </div>
                       </Dialog>
                     </TableCell>
                   </TableRow>
