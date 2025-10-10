@@ -23,7 +23,6 @@ function AddressCard({
         }
         w-full sm:w-[90%] md:w-[70%] lg:w-[60%] mx-auto mt-4`}
     >
-      {/* Card Content */}
       <CardContent className="flex flex-col gap-3 text-sm sm:text-base md:text-lg p-4">
         <div className="flex flex-col sm:flex-row sm:justify-between">
           <span className="font-semibold">Address:</span>
@@ -51,7 +50,6 @@ function AddressCard({
         </div>
       </CardContent>
 
-      {/* Card Footer */}
       <CardFooter className="flex flex-col sm:flex-row justify-end gap-3 p-4">
         <Button
           onClick={() => handleEditAddress(addressInfo)}
